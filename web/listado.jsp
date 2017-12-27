@@ -16,7 +16,10 @@
     <body>
         <h2><%=titulo%></h2>
         <div style="margin:30px">
-            
+            <form action="<%= request.getContextPath()+"/buscar" %>" method="post">
+                <input type="text" name="texto">
+                <input type="submit" value="Buscar">
+            </form>
         </div>
 
         <table border="1" cellspacing="1" cellpadding="1">
@@ -25,6 +28,7 @@
                     <th>ID</th>
                     <th>Titulo</th>
                     <th>Autor</th>
+                    <th>Detalle</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,6 +37,7 @@
                     <td><%=libro.getId()%></td>
                     <td><%= libro.getTitulo() %></td>
                     <td><%= libro.getAutor() %></td>
+                    <td><a href="detalle?id=<%= libro.getId()%>" >ver</a></td>
                 </tr>
                 <% } %>
             </tbody>

@@ -3,28 +3,31 @@ package Controlers;
 import Models.Libro;
 import Models.LibrosDB;
 import java.io.IOException;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "listadoLibros", urlPatterns = {"/listadoLibros"})
-public class listadoLibros extends HttpServlet {
-    
-    private LibrosDB librosdb = new LibrosDB();
+
+
+@WebServlet(name = "DetalleServletController", urlPatterns = {"/detalle"})
+public class DetalleServletController extends HttpServlet {
+
+    LibrosDB libros = new LibrosDB();
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        List<Libro> lista = librosdb.obtenerTodos();
+        int id = Integer.valueOf(request.getParameter("id"));
         
-        request.setAttribute("libros", lista);
-        request.setAttribute("titulo", "Listado de libros:");
+        Libro libro = libros.buscarPorId(id);
         
-        getServletContext().getRequestDispatcher("/listado.jsp").forward(request, response);
+        request.setAttribute("libro", libro);
+        request.setAttribute("titulo", libro.getTitulo()+":");
+        
+        getServletContext().getRequestDispatcher("/detalle.jsp").forward(request, response);
     }
 
     @Override
@@ -38,7 +41,7 @@ public class listadoLibros extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
-    
+
     @Override
     public String getServletInfo() {
         return "Short description";

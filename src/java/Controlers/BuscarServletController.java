@@ -3,28 +3,30 @@ package Controlers;
 import Models.Libro;
 import Models.LibrosDB;
 import java.io.IOException;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "listadoLibros", urlPatterns = {"/listadoLibros"})
-public class listadoLibros extends HttpServlet {
-    
-    private LibrosDB librosdb = new LibrosDB();
+@WebServlet(name = "BuscarServletController", urlPatterns = {"/buscar"})
+public class BuscarServletController extends HttpServlet {
+
+    private LibrosDB modelo = new LibrosDB();
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String texto = request.getParameter("texto");
         
-        List<Libro> lista = librosdb.obtenerTodos();
+        texto = texto.toUpperCase();
         
-        request.setAttribute("libros", lista);
-        request.setAttribute("titulo", "Listado de libros:");
+        Libro libro = modelo.BuscarPorTexto(texto);
         
-        getServletContext().getRequestDispatcher("/listado.jsp").forward(request, response);
+        request.setAttribute("libro", libro);
+        request.setAttribute("titulo", libro.getTitulo()+":");
+        
+        getServletContext().getRequestDispatcher("/detalle.jsp").forward(request, response);
     }
 
     @Override
@@ -38,7 +40,7 @@ public class listadoLibros extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
-    
+
     @Override
     public String getServletInfo() {
         return "Short description";
