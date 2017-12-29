@@ -1,4 +1,4 @@
-package Models;
+package Models.entity;
 
 public class Libro {
     private int id;

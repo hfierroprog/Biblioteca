@@ -1,5 +1,5 @@
 <%@page import="java.util.List"%>
-<%@page import="Models.Libro"%>
+<%@page import="Models.entity.Libro"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 

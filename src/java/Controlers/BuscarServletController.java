@@ -1,7 +1,7 @@
 package Controlers;
 
-import Models.Libro;
-import Models.LibrosDB;
+import Models.dao.LibroDaoJDBC;
+import Models.entity.Libro;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "BuscarServletController", urlPatterns = {"/buscar"})
 public class BuscarServletController extends HttpServlet {
 
-    private LibrosDB modelo = new LibrosDB();
+    LibroDaoJDBC modelo = new LibroDaoJDBC();
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -21,7 +21,7 @@ public class BuscarServletController extends HttpServlet {
         
         texto = texto.toUpperCase();
         
-        Libro libro = modelo.BuscarPorTexto(texto);
+        Libro libro = modelo.buscarPorTexto(texto);
         
         request.setAttribute("libro", libro);
         request.setAttribute("titulo", libro.getTitulo()+":");

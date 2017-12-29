@@ -1,7 +1,7 @@
 package Controlers;
 
-import Models.Libro;
-import Models.LibrosDB;
+import Models.dao.LibroDaoJDBC;
+import Models.entity.Libro;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "DetalleServletController", urlPatterns = {"/detalle"})
 public class DetalleServletController extends HttpServlet {
 
-    LibrosDB libros = new LibrosDB();
+    LibroDaoJDBC modelo = new LibroDaoJDBC();
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -22,7 +22,7 @@ public class DetalleServletController extends HttpServlet {
         
         int id = Integer.valueOf(request.getParameter("id"));
         
-        Libro libro = libros.buscarPorId(id);
+        Libro libro = modelo.buscarPorId(id);
         
         request.setAttribute("libro", libro);
         request.setAttribute("titulo", libro.getTitulo()+":");
